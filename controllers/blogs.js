@@ -1,0 +1,23 @@
+ const blogerRouter=require('express').Router()
+ const Blog = require('../models/blogs')
+
+
+ blogerRouter.get('/', (request, response) => {
+  Blog
+    .find({})
+    .then(blogs => {
+      response.json(blogs)
+    })
+})
+
+blogerRouter.post('/', (request, response) => {
+  const blog = new Blog(request.body)
+
+  blog
+    .save()
+    .then(result => {
+      response.status(201).json(result)
+    })
+})
+
+module.exports = blogerRouter
