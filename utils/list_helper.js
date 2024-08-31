@@ -41,13 +41,7 @@ return{
   likes: maxValue
 }
 
-
-
 }
-
-
-
-
 
   module.exports = {
     dummy,
