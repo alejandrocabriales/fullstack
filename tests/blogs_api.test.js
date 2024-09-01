@@ -52,7 +52,7 @@ test('verify id', async ()=> {
 
 test('should add a new blog', async() => { 
   await api.post('/api/blogs').send({
-    title: 'Ale Blog ',
+    title: 'Ale Blog',
     author: 'Some author',
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
     likes: 23
@@ -84,9 +84,27 @@ test('should add a new blog', async() => {
     author: 'Some author',
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
   }).expect(400)
+ })
 
+ test('4.13 Blog List Expansions, step 1: delete', async() => { 
+const valuesDataBase= (await api.get('/api/blogs')).body
+  const getValueToDelete = valuesDataBase[0].id
+ await api.delete(`/api/blogs/${getValueToDelete}`).expect(204)
 
  })
+
+ test('Blog List Expansions, step 2 Update', async() => { 
+  const valuesDataBase= (await api.get('/api/blogs')).body
+  console.log('getValueToDelete',valuesDataBase)
+  const getValueToUpdate = valuesDataBase[1]
+
+  await api.put(`/api/blogs/${getValueToUpdate.id}`).send({
+    ...getValueToUpdate,
+    likes:290
+  }).expect(200)
+ })
+
+
 
 
 after(async () => {
