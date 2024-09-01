@@ -11,8 +11,11 @@
 })
 
 blogerRouter.post('/', (request, response) => {
-  const blog = new Blog(request.body)
 
+  const blog = new Blog(request.body)
+  if (!request.body.title) {
+    return response.status(400).send('Bad Request')
+  }
   blog
     .save()
     .then(result => {
